@@ -1,16 +1,19 @@
 package appium.youdao;
 
-
-
 import java.time.Duration;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.By.ByXPath;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import appium.listeners.MyRetryAnalyzer;
+import appium.listeners.MyTestListener;
 import io.appium.java_client.TouchAction;
+import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.android.AndroidKeyCode;
 import io.appium.java_client.remote.AndroidMobileCapabilityType;
 import io.appium.java_client.remote.MobileCapabilityType;
@@ -21,7 +24,7 @@ import io.appium.java_client.touch.offset.ElementOption;
 public class firstTest extends baseTest {
 	Logger log = LogManager.getLogger();
 	//日志分5大级别：trace、debug、info、warn、error、fatal
-	@Test(alwaysRun = false)
+	@Test(enabled =false)
 	public void A_loginAndLayOutTest() {
 		/*
 		 * driver.findElementById("com.youdao.note:id/tab_mine").click();
@@ -34,7 +37,7 @@ public class firstTest extends baseTest {
 		// UiSelector().text(\"cheat2018@163.com\")").click();
 
 		driver.findElement(By.id("com.youdao.note:id/password")).findElementById("com.youdao.note:id/edittext")
-				.sendKeys("chan2018");
+		.sendKeys("chan2018");
 		driver.findElement(By.id("com.youdao.note:id/login")).click();
 		try {
 			Thread.sleep(3000);
@@ -49,7 +52,7 @@ public class firstTest extends baseTest {
 	public void B_addTest() {
 
 		driver.findElement(By.id("com.youdao.note:id/add_note")).click();
-		driver.findElement(By.id("com.youdao.note:id/add_icon")).click();
+		driver.findElement(By.id("com.youdao.note:id/add_icons")).click();
 		driver.findElement(By.id("com.youdao.note:id/note_title")).sendKeys("this is the first demo");
 		// 获取当前共有几个页面
 		System.out.println(driver.getContextHandles());
@@ -65,11 +68,12 @@ public class firstTest extends baseTest {
 
 	}
 
-	@Test(invocationCount = 1)
+	@Test(enabled =true)
 	public void C_deleteTest() {
+		List<AndroidElement>  list_title = driver.findElementsByXPath("//android.widget.ListView[@resource-id='android:id/list']/android.widget.RelativeLayout");		
 		driver.performTouchAction(new TouchAction<>(driver)).longPress(LongPressOptions.longPressOptions()
 				.withElement(ElementOption.element(
-						driver.findElementByAndroidUIAutomator("new UiSelector().text(\"this is the first demo\")")))
+						list_title.get(0)))
 				.withDuration(Duration.ofMillis(500))).release().perform();
 		// uiautonmator定位，取元素的text属性
 		driver.findElementByAndroidUIAutomator("new UiSelector().text(\"删除\")").click();
@@ -78,7 +82,7 @@ public class firstTest extends baseTest {
 		// 确认删除
 		driver.findElement(By.id("com.youdao.note:id/btn_ok")).click();
 		// 退出功能
-		try {
+		/*	try {
 			Thread.sleep(3000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -88,14 +92,13 @@ public class firstTest extends baseTest {
 		driver.findElement(By.id("com.youdao.note:id/menu_setting")).click();
 		driver.findElement(By.id("com.youdao.note:id/account_info")).click();
 		driver.findElementById("com.youdao.note:id/logout").click();
-		driver.findElement(By.id("com.youdao.note:id/clear_history")).click();
+		driver.findElement(By.id("com.youdao.note:id/clear_history")).click();*/
 
 	}
 
-	@Test(retryAnalyzer = MyRetryAnalyzer.class)
+	@Test(enabled =false)
 	public void D_logout() {
 		// 退出功能
-
 		driver.findElementById("com.youdao.note:id/tab_mine").findElement(By.id("com.youdao.note:id/tab_mine")).click();
 		driver.findElement(By.id("com.youdao.note:id/menu_setting")).click();
 		driver.findElement(By.id("com.youdao.note:id/account_info")).click();
