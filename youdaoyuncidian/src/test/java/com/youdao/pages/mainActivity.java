@@ -41,7 +41,7 @@ public class mainActivity {
 	private AndroidElement ensure_completeed_toast;
 	@AndroidFindBy(xpath="//android.widget.ListView[@resource-id='android:id/list']/android.widget.RelativeLayout")
 	private java.util.List<AndroidElement>  title_list;
-	@AndroidFindBy(id = "com.youdao.note:id/btn_oks")
+	@AndroidFindBy(id = "com.youdao.note:id/btn_ok")
 	private AndroidElement cancle_delete_ensure_btn;
 	@AndroidFindBy(id ="com.youdao.note:id/btn_cancel" )
 	private AndroidElement delete_cancel;
